@@ -138,6 +138,7 @@ void doctorCO(){
 	string name;
 	Patient p;
 	Doctor* d;
+	int vacantRoom;
 	bool nameFound = false;
 
 	cout << "Please enter your name." << endl;
@@ -148,19 +149,22 @@ void doctorCO(){
 		if(rooms.at(x).hasDr()){
 			if(name == rooms.at(x).getDoctor()->getDrName()){
 				nameFound = true;
+				vacantRoom = x;
 
-//				d = rooms.at(x).getDoctor();
+				//				d = rooms.at(x).getDoctor();
 				rooms.at(x).drDepart(rooms.at(x).getDoctor());
 
 				string mess = "Thank you Dr. " + name + ". Your patients are being re-assinged.";
 				cout << mess;
 				file << mess;
-
-				if(rooms.at(x).numWaiting() > 0){
-					p =rooms.at(x).getPatient();
-					patientAutoCI(p);
-				}
 			}
+		}
+	}
+
+	if(rooms.at(vacantRoom).numWaiting() > 0){
+		for(int x=rooms.at(vacantRoom).numWaiting();x>0;x--){
+			p =rooms.at(vacantRoom).getPatient();
+			patientAutoCI(p);
 		}
 	}
 
