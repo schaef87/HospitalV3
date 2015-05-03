@@ -59,11 +59,11 @@ Patient* Room::patDepart(){
 	return cured;
 }
 
-//Patient* Room::getPatient(){
-//	Patient temp = waitingRoom.front();
-//	Patient* patInfo = &temp;
-//	return patInfo;
-//}
+Patient* Room::getPatient(){
+	Patient temp = waitingRoom.front();
+	Patient* patInfo = &temp;
+	return patInfo;
+}
 
 Doctor* Room::getDoctor(){
 	return doctor;

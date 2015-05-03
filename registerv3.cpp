@@ -185,7 +185,7 @@ void patientCI(){
 	Patient *pat = new Patient(name, spec, age);
 
 	int docTrack;
-	bool checkFam = false;
+	bool defaultFam = false;
 	int x = -1;
 	while(track != 1 && x < 24){
 		x++;
@@ -193,10 +193,11 @@ void patientCI(){
 			drName = rooms.at(x).getDoctor()->getDrName();
 			drSpec = rooms.at(x).getDoctor()->getDrSpec();
 			if (drSpec == "FAM"){
-				checkFam = true;
+				defaultFam = true;
 				docTrack = x;
 			}
 			if(drSpec == pat->getSpec()){
+				defaultFam = false;
 				pat->setRoom(x+1);
 				rooms.at(x).patArrive(*pat);
 				track = 1;
@@ -207,7 +208,7 @@ void patientCI(){
 		}
 	}
 
-	if(checkFam == true){
+	if(defaultFam == true){
 		track = 1;
 		pat->setRoom(docTrack+1);
 		rooms.at(docTrack).patArrive(*pat);
@@ -233,7 +234,7 @@ void patientAutoCI(Patient p){
 	int track=0;
 
 	int docTrack;
-	int x = 0;
+	//	int x = 0;
 	for(int x=0;x<25;x++){
 		int count = 0;
 		if(rooms.at(x).hasDr()){
@@ -275,7 +276,24 @@ void patientAutoCI(Patient p){
 }
 
 void patientCO(){
+	string name;
+	bool nameFound = false;
 
+	cout << "Please enter your name." << endl;
+	cin >> name;
+
+	for(int x=24;x>=0;x--){
+		if(name == rooms.at(x).getPatient()->getName()){
+			nameFound = true;
+			rooms.at(x).patDepart();
+			cout << "Have a wonderful day " << name << "!" << endl;
+			file << name << " has checked out" << endl;
+		}
+	}
+
+	if(nameFound == false){
+		cout << "Patient not found. Please try again." << endl;
+	}
 }
 
 string specList(){
