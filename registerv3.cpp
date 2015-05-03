@@ -158,7 +158,7 @@ void doctorCO(){
 	rooms.at(tracker).drDepart(leaving);
 
 	while(rooms.at(tracker).numWaiting() != 0){
-		Patient *temp = rooms.at(tracker).patDepart();
+		Patient *temp = rooms.at(tracker).getPatient();
 		patientAutoCI(*temp);
 	}
 }
@@ -282,7 +282,8 @@ void patientCO(){
 	cout << "Please enter your name." << endl;
 	cin >> name;
 
-	for(int x=24;x>=0;x--){
+	for(int x=0;x<25;x--){
+		cout << rooms.at(x).getDoctor()->getDrName() << endl;
 		if(name == rooms.at(x).getPatient()->getName()){
 			nameFound = true;
 			rooms.at(x).patDepart();

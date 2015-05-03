@@ -32,7 +32,7 @@ public:
 	void drDepart(Doctor* d);
 	void patArrive(Patient& p);
 
-	Patient* patDepart();
+	void patDepart();
 	Patient* getPatient();
 	Doctor* getDoctor();
 
@@ -43,6 +43,7 @@ private:
 	bool docIn;
 	queue<Patient> waitingRoom;
 	Doctor* doctor;
+	Patient* patient;
 };
 
 

@@ -52,17 +52,13 @@ void Room::patArrive(Patient& p){
 	waitingRoom.push(p);
 }
 
-Patient* Room::patDepart(){
+void Room::patDepart(){
 	Patient temp = waitingRoom.front();
-	Patient* cured = &temp;
 	waitingRoom.pop();
-	return cured;
 }
 
 Patient* Room::getPatient(){
-	Patient temp = waitingRoom.front();
-	Patient* patInfo = &temp;
-	return patInfo;
+	return patient;
 }
 
 Doctor* Room::getDoctor(){
