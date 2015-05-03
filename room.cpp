@@ -38,8 +38,8 @@ void Room::setRmNum(int r){
 	roomNum = r;
 }
 
-void Room::drArrive(Doctor& d){
-	doctor = &d;
+void Room::drArrive(Doctor* d){
+	doctor = d;
 	docIn = true;
 }
 
@@ -48,8 +48,8 @@ void Room::drDepart(Doctor* d){
 	docIn = false;
 }
 
-void Room::patArrive(Patient& p){
-	waitingRoom.push(p);
+void Room::patArrive(Patient* p){
+	waitingRoom.push(*p);
 }
 
 void Room::patDepart(){

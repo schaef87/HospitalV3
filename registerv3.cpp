@@ -131,7 +131,7 @@ void doctorCI(){
 	cout << mess;
 	file << mess;
 
-	rooms.at(room-1).drArrive(*doc);   //Assigns doctor to room.
+	rooms.at(room-1).drArrive(doc);   //Assigns doctor to room.
 }
 
 void doctorCO(){
@@ -199,7 +199,7 @@ void patientCI(){
 			if(drSpec == pat->getSpec()){
 				defaultFam = false;
 				pat->setRoom(x+1);
-				rooms.at(x).patArrive(*pat);
+				rooms.at(x).patArrive(pat);
 				track = 1;
 				cout << endl;
 				cout << "Welcome, " << pat->getName() << ". You will see Dr. " << drName << " in room #" << x+1 << endl;
@@ -211,7 +211,7 @@ void patientCI(){
 	if(defaultFam == true){
 		track = 1;
 		pat->setRoom(docTrack+1);
-		rooms.at(docTrack).patArrive(*pat);
+		rooms.at(docTrack).patArrive(pat);
 		cout << endl;
 		cout << "Welcome, " << pat->getName() << ". We do not have the specialist you seek." << endl;
 		cout << "You will see our on staff Family Practitioner Dr. " << rooms.at(docTrack).getDoctor()->getDrName() << " in room #" << docTrack+1 << endl;
@@ -245,13 +245,13 @@ void patientAutoCI(Patient p){
 			drSpec = rooms.at(x).getDoctor()->getDrSpec();
 			if(drSpec == p.getSpec()){
 				p.setRoom(x+1);
-				rooms.at(x).patArrive(p);
+				rooms.at(x).patArrive(&p);
 				track = 1;
 				cout << "Welcome, " << p.getName() << ". You will see Dr. " << drName << " in room #" << x+1 << endl;
 				file << p.getName() << " will see Dr. " << drName << " in room #" << x+1 << endl;
 			} else if(drSpec != p.getSpec() && count == 24){
 				p.setRoom(docTrack+1);
-				rooms.at(docTrack).patArrive(p);
+				rooms.at(docTrack).patArrive(&p);
 				track = 1;
 			}
 		}
@@ -271,7 +271,7 @@ void patientAutoCI(Patient p){
 		cout << p.getName() << ", you have been assigned to Dr. " << rooms.at(waitList).getDoctor()->getDrName() << " in room "<< rooms.at(waitList).roomNumber() << endl;
 		file << p.getName() << ", has been relocated to Dr. " << rooms.at(waitList).getDoctor()->getDrName() << " in room " << rooms.at(waitList).roomNumber() << endl;
 
-		rooms.at(waitList).patArrive(p);
+		rooms.at(waitList).patArrive(&p);
 	}
 }
 
@@ -283,7 +283,7 @@ void patientCO(){
 	cin >> name;
 
 	for(int x=0;x<25;x--){
-		cout << rooms.at(x).getDoctor()->getDrName() << endl;
+//		cout << rooms.at(x).getDoctor()->getDrName() << endl;
 		if(name == rooms.at(x).getPatient()->getName()){
 			nameFound = true;
 			rooms.at(x).patDepart();

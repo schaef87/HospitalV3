@@ -28,9 +28,9 @@ public:
 	int roomNumber();
 
 	void setRmNum(int r);
-	void drArrive(Doctor& d);
+	void drArrive(Doctor* d);
 	void drDepart(Doctor* d);
-	void patArrive(Patient& p);
+	void patArrive(Patient* p);
 
 	void patDepart();
 	Patient* getPatient();
