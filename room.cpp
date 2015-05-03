@@ -38,7 +38,7 @@ void Room::setRmNum(int r){
 	roomNum = r;
 }
 
-void Room::drArrive(Doctor* d){
+void Room::drArrive(Doctor *d){
 	doctor = d;
 	docIn = true;
 }
@@ -57,8 +57,8 @@ void Room::patDepart(){
 	waitingRoom.pop();
 }
 
-Patient* Room::getPatient(){
-	return patient;
+Patient Room::getPatient(){
+	return waitingRoom.front();
 }
 
 Doctor* Room::getDoctor(){

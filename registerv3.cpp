@@ -136,30 +136,36 @@ void doctorCI(){
 
 void doctorCO(){
 	string name;
-	Doctor* leaving = 0;
-	int tracker;
+	Patient p;
+	Doctor* d;
+	bool nameFound = false;
 
-	cout << "What is your name?" << endl;
+	cout << "Please enter your name." << endl;
 	cin >> name;
 
-	test:for(tracker =0;tracker<25;tracker++){
-		if(name == rooms.at(tracker).getDoctor()->getDrName()){
-			leaving == rooms.at(tracker).getDoctor();
-			break;
-		} else {
-			cout << "Please try again." << endl;
-			cin >> name;
-			goto test;
+
+	for(int x=0;x<25;x++){
+		if(rooms.at(x).hasDr()){
+			if(name == rooms.at(x).getDoctor()->getDrName()){
+				nameFound = true;
+
+//				d = rooms.at(x).getDoctor();
+				rooms.at(x).drDepart(rooms.at(x).getDoctor());
+
+				string mess = "Thank you Dr. " + name + ". Your patients are being re-assinged.";
+				cout << mess;
+				file << mess;
+
+				if(rooms.at(x).numWaiting() > 0){
+					p =rooms.at(x).getPatient();
+					patientAutoCI(p);
+				}
+			}
 		}
 	}
 
-	cout << "Thank you. Your patients are being re-assigned." << endl;
-	file << "Dr. " << name << " has departed. Patients are being re-assigned." << endl;
-	rooms.at(tracker).drDepart(leaving);
-
-	while(rooms.at(tracker).numWaiting() != 0){
-		Patient *temp = rooms.at(tracker).getPatient();
-		patientAutoCI(*temp);
+	if(nameFound == false){
+		cout << "Doctor by that names does not exist. Please try again." << endl;
 	}
 }
 
@@ -227,16 +233,17 @@ void patientCI(){
 }
 
 void patientAutoCI(Patient p){
-	string name;
+	string name = p.getName();;
 	string drName;
-	string spec;
+	string spec = p.getSpec();
 	string drSpec;
 	int track=0;
+	int count = 0;
 
 	int docTrack;
 	//	int x = 0;
 	for(int x=0;x<25;x++){
-		int count = 0;
+		count++;
 		if(rooms.at(x).hasDr()){
 			drName = rooms.at(x).getDoctor()->getDrName();
 			if (rooms.at(x).getDoctor()->getDrSpec() == "FAM"){
@@ -247,8 +254,8 @@ void patientAutoCI(Patient p){
 				p.setRoom(x+1);
 				rooms.at(x).patArrive(&p);
 				track = 1;
-				cout << "Welcome, " << p.getName() << ". You will see Dr. " << drName << " in room #" << x+1 << endl;
-				file << p.getName() << " will see Dr. " << drName << " in room #" << x+1 << endl;
+				cout << "\nWe are sorry for the inconvenience, " << name << ". You will see Dr. " << drName << " in room #" << x+1 << endl;
+				file << name << " will see Dr. " << drName << " in room #" << x+1 << endl;
 			} else if(drSpec != p.getSpec() && count == 24){
 				p.setRoom(docTrack+1);
 				rooms.at(docTrack).patArrive(&p);
@@ -282,18 +289,20 @@ void patientCO(){
 	cout << "Please enter your name." << endl;
 	cin >> name;
 
-	for(int x=0;x<25;x--){
-//		cout << rooms.at(x).getDoctor()->getDrName() << endl;
-		if(name == rooms.at(x).getPatient()->getName()){
-			nameFound = true;
-			rooms.at(x).patDepart();
-			cout << "Have a wonderful day " << name << "!" << endl;
-			file << name << " has checked out" << endl;
-		}
+	for(int x=0;x<25;x++){
+		//		cout << rooms.at(x).getDoctor()->getDrName() << endl;
+		if(rooms.at(x).numWaiting() > 0){
+			if(name == rooms.at(x).getPatient().getName()){
+				nameFound = true;
+				rooms.at(x).patDepart();
+				cout << "Have a wonderful day " << name << "!" << endl;
+				file << name << " has checked out" << endl;
+			}
+		} // END Is waiting check
 	}
 
 	if(nameFound == false){
-		cout << "Patient not found. Please try again." << endl;
+		cout << "Name does not match the next patient in line. Please try again." << endl;
 	}
 }
 

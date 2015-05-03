@@ -22,7 +22,6 @@ public:
 	string getSpec();
 	int getAge();
 	int getRoom();
-
 	void setRoom(int r);
 
 private:
