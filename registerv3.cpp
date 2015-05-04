@@ -157,6 +157,7 @@ void doctorCO(){
 				string mess = "Thank you Dr. " + name + ". Your patients are being re-assinged.";
 				cout << mess;
 				file << mess;
+				break;
 			}
 		}
 	}
