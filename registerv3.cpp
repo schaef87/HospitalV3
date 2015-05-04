@@ -136,7 +136,7 @@ void doctorCI(){
 
 void doctorCO(){
 	string name;
-	Patient p;
+//	Patient p;
 	Doctor* d;
 	int vacantRoom;
 	bool nameFound = false;
@@ -154,7 +154,7 @@ void doctorCO(){
 				//				d = rooms.at(x).getDoctor();
 				rooms.at(x).drDepart(rooms.at(x).getDoctor());
 
-				string mess = "Thank you Dr. " + name + ". Your patients are being re-assinged.";
+				string mess = "Thank you Dr. " + name + ". Your patients are being re-assinged.\n";
 				cout << mess;
 				file << mess;
 				break;
@@ -164,13 +164,14 @@ void doctorCO(){
 
 	if(rooms.at(vacantRoom).numWaiting() > 0){
 		for(int x=rooms.at(vacantRoom).numWaiting();x>0;x--){
-			p =rooms.at(vacantRoom).getPatient();
-			patientAutoCI(p);
+//			p = rooms.at(vacantRoom).getPatient();
+			patientAutoCI(rooms.at(vacantRoom).getPatient());
+//			delete &p;
 		}
 	}
 
 	if(nameFound == false){
-		cout << "Doctor by that names does not exist. Please try again." << endl;
+		cout << "Doctor by that names does not exist. Please try again.\n" << endl;
 	}
 }
 
@@ -300,14 +301,14 @@ void patientCO(){
 			if(name == rooms.at(x).getPatient().getName()){
 				nameFound = true;
 				rooms.at(x).patDepart();
-				cout << "Have a wonderful day " << name << "!" << endl;
+				cout << "Have a wonderful day " << name << "!\n" << endl;
 				file << name << " has checked out" << endl;
 			}
 		} // END Is waiting check
 	}
 
 	if(nameFound == false){
-		cout << "Name does not match the next patient in line. Please try again." << endl;
+		cout << "Name does not match the next patient in line. Please try again.\n" << endl;
 	}
 }
 

@@ -53,7 +53,7 @@ void Room::patArrive(Patient* p){
 }
 
 void Room::patDepart(){
-	Patient temp = waitingRoom.front();
+//	Patient temp = waitingRoom.front();
 	waitingRoom.pop();
 }
 
