@@ -119,10 +119,30 @@ void doctorCI(){
 	cout << "What room would you prefer? Choose 1-25" << endl;
 	cin >> room;
 
+	bool check = false;
+	while(check == false){
+		if(!(room < 1) && !(room > 25)){
+			check = true;
+		} else {
+			cout << "Invalid selection." << endl;
+			cin >> room;
+		}
+	}
+
 	while(rooms.at(room-1).hasDr()){
 		cout << "Room occupied." << endl;
 		cout << "Please select another room. Choose 1-25" << endl;
 		cin >> room;
+
+		bool check = false;
+			while(check == false){
+				if(!(room < 1) && !(room > 25)){
+					check = true;
+				} else {
+					cout << "Invalid selection." << endl;
+					cin >> room;
+				}
+			}
 	}
 
 	Doctor *doc = new Doctor(name, spec, room);
